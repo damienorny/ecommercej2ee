@@ -1,10 +1,9 @@
-
 -- phpMyAdmin SQL Dump
 -- version 4.3.12
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Mar 24 Mars 2015 à 16:28
+-- Généré le :  Jeu 26 Mars 2015 à 13:56
 -- Version du serveur :  10.0.17-MariaDB-log
 -- Version de PHP :  5.6.6
 
@@ -32,7 +31,15 @@ CREATE TABLE IF NOT EXISTS `article` (
   `nom_article` varchar(255) NOT NULL,
   `desc_article` text NOT NULL,
   `prix_article` float NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `article`
+--
+
+INSERT INTO `article` (`id_article`, `nom_article`, `desc_article`, `prix_article`) VALUES
+(1, 'Article 1', 'Article 1', 12),
+(2, 'Article 2', 'Article 2', 1212);
 
 -- --------------------------------------------------------
 
@@ -42,8 +49,16 @@ CREATE TABLE IF NOT EXISTS `article` (
 
 CREATE TABLE IF NOT EXISTS `category` (
   `id_category` int(11) NOT NULL,
-  `nom_category` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `nom_category` varchar(255) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `category`
+--
+
+INSERT INTO `category` (`id_category`, `nom_category`) VALUES
+(1, 'Categorie1'),
+(3, 'Categorie2');
 
 -- --------------------------------------------------------
 
@@ -55,6 +70,14 @@ CREATE TABLE IF NOT EXISTS `category_article` (
   `id_category` int(11) NOT NULL,
   `id_article` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `category_article`
+--
+
+INSERT INTO `category_article` (`id_category`, `id_article`) VALUES
+(1, 1),
+(3, 2);
 
 -- --------------------------------------------------------
 
@@ -79,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `client` (
 CREATE TABLE IF NOT EXISTS `commande` (
   `id_commande` int(11) NOT NULL,
   `date_commande` datetime NOT NULL,
-  `prix_commande` int(11) NOT NULL,
+  `prix_commande` float NOT NULL,
   `id_client` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -143,7 +166,12 @@ ALTER TABLE `commande_article`
 -- AUTO_INCREMENT pour la table `article`
 --
 ALTER TABLE `article`
-  MODIFY `id_article` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_article` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT pour la table `category`
+--
+ALTER TABLE `category`
+  MODIFY `id_category` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT pour la table `client`
 --
