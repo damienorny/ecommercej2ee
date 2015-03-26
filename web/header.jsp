@@ -3,8 +3,10 @@
     Created on : Mar 24, 2015, 4:00:33 PM
     Author     : mathieu,damien,alexandre
 --%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<jsp:useBean id="ecommerce" class="modele.EcommerceBean" scope="session"/>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
