@@ -49,6 +49,21 @@ public class MainServlet extends HttpServlet {
         RequestDispatcher view = request.getRequestDispatcher("/accueil.jsp");
         view.forward(request, response);
     }
+    
+    protected void processGetRequestDetailArticle(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        
+        HttpSession session = request.getSession();
+        EcommerceBean ecommerceBean = (EcommerceBean) session.getAttribute("ecommerce");
+       
+        Long id = Long.parseLong(request.getParameter("idArticle"));
+        Article article = ecommerceBean.getArticleById(id);
+        
+        request.setAttribute("article", article);
+        RequestDispatcher view = request.getRequestDispatcher("/detailArticle.jsp");
+        view.forward(request, response);
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -67,9 +82,9 @@ public class MainServlet extends HttpServlet {
         {
             processGetRequestIndex(request, response);
         }
-        else if(action.equals("test"))
+        else if(action.equals("detailArticle"))
         {
-            //prochaine action
+            processGetRequestDetailArticle(request, response);
         }
     }
 
