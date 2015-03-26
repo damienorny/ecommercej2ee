@@ -20,5 +20,15 @@
     </head>
     <body>
         <nav class="navbar navbar-default navbar-fixed-top">
-            <h1>Bienvenue sur notre site de e-commerce</h1>
+            <div class="container-fluid ">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/ecommercej2ee/accueil.jsp">Bienvenue sur notre site de e-commerce (.jsp)</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#">Connexion (Non opérationnel)</a></li>
+                            <li><a href="#">Inscription (Non opérationnel)</a></li>
+                    </ul>
+                </div>
+            </div>
         </nav> 
