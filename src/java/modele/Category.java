@@ -13,6 +13,11 @@ public class Category {
     private Long id;
     private String nom;
 
+    public Category(Long id, String nom) {
+        this.id = id;
+        this.nom = nom;
+    }
+    
     public Long getId() {
         return id;
     }

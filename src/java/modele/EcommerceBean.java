@@ -52,7 +52,7 @@ public class EcommerceBean {
         }
     }
     
-    public ArrayList<String> getArticles()
+    public ArrayList<String> getAllArticles()
     {
         ArrayList<String> liste = new ArrayList();
         connectBDD();
@@ -69,4 +69,60 @@ public class EcommerceBean {
         disconnectBDD();
         return liste;
     }
+    
+    public Article getArticleById(Long id)
+    {
+        Article article = null;
+        connectBDD();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM article WHERE id_article = " + id.toString());
+            if(rs.next())
+            {
+                article = new Article(id, rs.getString("nom_article"), rs.getString("nom_article"), rs.getFloat("prix_article"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EcommerceBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        disconnectBDD();
+        return article;
+    }
+    
+    public ArrayList<Article> getAllArticlesByCategory(Category category)
+    {
+        ArrayList<Article> liste = new ArrayList<>();
+        connectBDD();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM `category_article` LEFT JOIN article ON category_article.id_article = article.id_article WHERE `id_category` = " + category.getId().toString());
+            while(rs.next())
+            {
+                liste.add(new Article(rs.getLong("id_article"), rs.getString("nom_article"), rs.getString("description_article"), rs.getFloat("prix_article")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EcommerceBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        disconnectBDD();
+        return liste;
+    }
+    
+    public Category getArticleCategory(Article article)
+    {
+        Category category = null;
+        connectBDD();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM `category_article` LEFT JOIN category ON category_article.id_category = category.id_category WHERE `id_article` = " + article.getId().toString());
+            if(rs.next())
+            {
+                category = new Category(rs.getLong("id_category"), rs.getString("nom_category"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EcommerceBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        disconnectBDD();
+        return category;
+    }
+    
+    
 }

@@ -15,6 +15,13 @@ public class Article {
     private String description;
     private Float prix;
 
+    public Article(Long id, String nom, String description, Float prix) {
+        this.id = id;
+        this.nom = nom;
+        this.description = description;
+        this.prix = prix;
+    }
+
     public String getNom() {
         return nom;
     }

@@ -32,7 +32,7 @@ public class MainServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         EcommerceBean ecommerceBean = new EcommerceBean();
-        ArrayList<String> liste = ecommerceBean.getArticles();
+        ArrayList<String> liste = ecommerceBean.getAllArticles();
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             for(String nom: liste)
