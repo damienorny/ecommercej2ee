@@ -57,7 +57,7 @@ public class MainServlet extends HttpServlet {
         HttpSession session = request.getSession();
         EcommerceBean ecommerceBean = (EcommerceBean) session.getAttribute("ecommerce");
        
-        Long id = Long.parseLong(request.getParameter("idArticle"));
+        Long id = Long.parseLong(request.getParameter("articleId"));
         Article article = ecommerceBean.getArticleById(id);
         
         request.setAttribute("article", article);
