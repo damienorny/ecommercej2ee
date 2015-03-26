@@ -33,10 +33,19 @@ public class MainServlet extends HttpServlet {
     protected void processGetRequestIndex(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        EcommerceBean ecommerceBean;
         HttpSession session = request.getSession();
-        EcommerceBean ecommerceBean = (EcommerceBean) session.getAttribute("ecommerce");
+        if(session.getAttribute("ecommerce") == null)
+        {
+            ecommerceBean = new EcommerceBean();
+            session.setAttribute("ecommerce", ecommerceBean);
+        }
+        else
+        {
+            ecommerceBean = (EcommerceBean) session.getAttribute("ecommerce");
+        }
         ArrayList<Article> listeArticles = ecommerceBean.getAllArticles();
-        request.setAttribute("listeArticles", this);
+        request.setAttribute("listeArticles", listeArticles);
         RequestDispatcher view = request.getRequestDispatcher("/accueil.jsp");
         view.forward(request, response);
     }
@@ -54,13 +63,13 @@ public class MainServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-        if(action.equals("test"))
-        {
-            
-        }
-        else
+        if(action == null)
         {
             processGetRequestIndex(request, response);
+        }
+        else if(action.equals("test"))
+        {
+            //prochaine action
         }
     }
 

@@ -4,6 +4,7 @@
     Author     : mathieu,damien,alexandre
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="java.util.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="ecommerce" class="modele.EcommerceBean" scope="session"/>
 
