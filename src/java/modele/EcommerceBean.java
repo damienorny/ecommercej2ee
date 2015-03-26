@@ -24,7 +24,7 @@ public class EcommerceBean {
     /**
      *
      */
-    public void connectBDD()
+    private void connectBDD()
     {
         try {
         // This loads an instance of the MySQL Driver.
@@ -43,7 +43,7 @@ public class EcommerceBean {
     /**
      *
      */
-    public void disconnectBDD()
+    private void disconnectBDD()
     {
         try {
             connection.close();
@@ -52,16 +52,16 @@ public class EcommerceBean {
         }
     }
     
-    public ArrayList<String> getAllArticles()
+    public ArrayList<Article> getAllArticles()
     {
-        ArrayList<String> liste = new ArrayList();
+        ArrayList<Article> liste = new ArrayList();
         connectBDD();
         try {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM article");
             while(rs.next())
             {
-                liste.add(rs.getString("nom_article"));
+                liste.add(new Article(rs.getLong("id_article"), rs.getString("nom_article"), rs.getString("nom_article"), rs.getFloat("prix_article")));
             }
         } catch (SQLException ex) {
             Logger.getLogger(EcommerceBean.class.getName()).log(Level.SEVERE, null, ex);
