@@ -7,6 +7,7 @@ package modele;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -34,7 +35,7 @@ public class EcommerceBean {
             System.out.println("" + cnfe);
         }
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommercej2ee?zeroDateTimeBehavior=convertToNull", "root", "Paradise");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommercej2ee?zeroDateTimeBehavior=convertToNull", "root", "Nico2893!!!");
         } catch (SQLException ex) {
             System.out.println("" + ex);
         }
@@ -124,5 +125,48 @@ public class EcommerceBean {
         return category;
     }
     
+    public boolean isUserRegistered(String email)
+    {
+        boolean reponse;
+        connectBDD();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM `client` WHERE `email_client` = " + email);
+            if(rs.next())
+            {
+                reponse = true;
+            }
+            else
+            {
+                reponse = false;                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EcommerceBean.class.getName()).log(Level.SEVERE, null, ex);
+            reponse = false; 
+        }
+        disconnectBDD();
+        return reponse;
+    }
     
+    public boolean addUser(String nom, String prenom, String email, String mdp, String adresse)
+    {
+        boolean reponse;
+        connectBDD();
+        try {
+            PreparedStatement maRequette;
+            maRequette = connection.prepareStatement("INSERT INTO `client`(`nom_client`, `prenom_client`, `email_client`, `mdp`, `adresse_client`) VALUES (?,?,?,?,?)");
+            maRequette.setString(1, nom);
+            maRequette.setString(2, prenom);
+            maRequette.setString(3, email);
+            maRequette.setString(4, mdp);
+            maRequette.setString(5, adresse);
+            maRequette.execute();
+            reponse = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(EcommerceBean.class.getName()).log(Level.SEVERE, null, ex);
+            reponse = false; 
+        }
+        disconnectBDD();
+        return reponse;
+    }
 }

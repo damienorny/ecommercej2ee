@@ -116,6 +116,54 @@ public class MainServlet extends HttpServlet {
         }
     }
 
+    protected void processPostRequestConnexion(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+       
+        processGetRequestIndex(request, response);
+    }
+    
+    protected void processPostRequestInscription(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        
+        HttpSession session = request.getSession();
+        EcommerceBean ecommerceBean = (EcommerceBean) session.getAttribute("ecommerce");
+        
+        String mdp = request.getParameter("mdp");
+        String mdpV = request.getParameter("mdpV");
+        if(mdp.equals(mdpV))
+        {
+            String email = request.getParameter("email");
+            if(ecommerceBean.isUserRegistered(email))
+            {
+                RequestDispatcher view = request.getRequestDispatcher("/register.jsp");//Déjà enregistré
+                view.forward(request, response);
+            }
+            else
+            {
+                String nom = request.getParameter("nom");
+                String prenom = request.getParameter("prenom");
+                String adresse = request.getParameter("adresse");
+                ecommerceBean.addUser(nom, prenom, email, mdp, adresse);
+            }
+            
+            processGetRequestIndex(request, response);
+        }
+        else
+        {
+            RequestDispatcher view = request.getRequestDispatcher("/register.jsp");//Mot de passe différents
+            view.forward(request, response);
+        }
+    }
+    
+    protected void processPostRequestDetailArticle(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        
+        processGetRequestIndex(request, response);
+    }
+    
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -127,7 +175,19 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
+        String page = request.getParameter("page");
+        if(page.equals("1"))
+        {
+            processPostRequestDetailArticle(request, response);
+        }
+        else if(page.equals("2"))
+        {
+            processPostRequestInscription(request, response);
+        }
+        else if(page.equals("3"))
+        {
+            processPostRequestConnexion(request, response);
+        }
     }
 
     /**

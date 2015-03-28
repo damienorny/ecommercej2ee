@@ -1,6 +1,6 @@
 <%@include file="./header.jsp" %>
     <div class="well">
-        <form action="MainServlet" method="POST" class="fos_user_registration_register form-horizontal">
+        <form action="index" method="POST" class="fos_user_registration_register form-horizontal">
             <div class="form-group">
                 <label class="col-sm-3 control-label" for="nom">Nom</label>
                 <div class="col-sm-4">
@@ -11,6 +11,12 @@
                 <label class="col-sm-3 control-label" for="prenom">Prenom</label>
                 <div class="col-sm-4">
                     <input class="form-control" type="text" id="prenom" name="prenom" required="required" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="adresse">Adresse</label>
+                <div class="col-sm-4">
+                    <textarea class="form-control" id="adresse" name="adresse" required="required"/></textarea>
                 </div>
             </div>
             <div class="form-group">
