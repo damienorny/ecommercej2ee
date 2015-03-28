@@ -29,8 +29,8 @@
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
-                            <li><a href="#">Connexion (Non opérationnel)</a></li>
-                            <li><a href="#">Inscription (Non opérationnel)</a></li>
+                            <li><a href="index?action=connexion">Connexion</a></li>
+                            <li><a href="index?action=inscription">Inscription</a></li>
                     </ul>
                 </div>
             </div>

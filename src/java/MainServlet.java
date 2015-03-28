@@ -64,6 +64,28 @@ public class MainServlet extends HttpServlet {
         RequestDispatcher view = request.getRequestDispatcher("/detailArticle.jsp");
         view.forward(request, response);
     }
+    
+    protected void processGetRequestConnexion(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        
+        HttpSession session = request.getSession();
+        EcommerceBean ecommerceBean = (EcommerceBean) session.getAttribute("ecommerce");
+       
+        RequestDispatcher view = request.getRequestDispatcher("/connexion.jsp");
+        view.forward(request, response);
+    }
+    
+    protected void processGetRequestInscription(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        
+        HttpSession session = request.getSession();
+        EcommerceBean ecommerceBean = (EcommerceBean) session.getAttribute("ecommerce");
+       
+        RequestDispatcher view = request.getRequestDispatcher("/register.jsp");
+        view.forward(request, response);
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -85,6 +107,14 @@ public class MainServlet extends HttpServlet {
         else if(action.equals("detailArticle"))
         {
             processGetRequestDetailArticle(request, response);
+        }
+        else if(action.equals("connexion"))
+        {
+            processGetRequestConnexion(request, response);
+        }
+        else if(action.equals("inscription"))
+        {
+            processGetRequestInscription(request, response);
         }
     }
 

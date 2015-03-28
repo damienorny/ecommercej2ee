@@ -1,6 +1,6 @@
 <%@include file="./header.jsp" %>
     <div class="well">
-        <form action="MainServlet.java" method="POST" class="fos_user_registration_register form-horizontal">
+        <form action="MainServlet" method="POST" class="fos_user_registration_register form-horizontal">
             <div class="form-group">
                 <label class="col-sm-3 control-label" for="nom">Nom</label>
                 <div class="col-sm-4">
