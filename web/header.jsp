@@ -25,7 +25,7 @@
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container-fluid ">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="/ecommercej2ee/accueil.jsp">Bienvenue sur notre site de e-commerce (.jsp)</a>
+                    <a class="navbar-brand" href="index?action=accueil">Bienvenue sur notre site de e-commerce</a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">

@@ -68,9 +68,6 @@ public class MainServlet extends HttpServlet {
     protected void processGetRequestConnexion(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        HttpSession session = request.getSession();
-        EcommerceBean ecommerceBean = (EcommerceBean) session.getAttribute("ecommerce");
        
         RequestDispatcher view = request.getRequestDispatcher("/connexion.jsp");
         view.forward(request, response);
@@ -79,9 +76,6 @@ public class MainServlet extends HttpServlet {
     protected void processGetRequestInscription(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        HttpSession session = request.getSession();
-        EcommerceBean ecommerceBean = (EcommerceBean) session.getAttribute("ecommerce");
        
         RequestDispatcher view = request.getRequestDispatcher("/register.jsp");
         view.forward(request, response);
@@ -115,6 +109,10 @@ public class MainServlet extends HttpServlet {
         else if(action.equals("inscription"))
         {
             processGetRequestInscription(request, response);
+        }
+        else if(action.equals("accueil"))
+        {
+            processGetRequestIndex(request, response);
         }
     }
 
