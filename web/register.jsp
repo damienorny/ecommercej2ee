@@ -22,16 +22,17 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label" for="mdp">Mot de passe</label>
                 <div class="col-sm-4">
-                    <input class="form-control" type="text" id="mdp" name="mdp" required="required" />
+                    <input class="form-control" type="password" id="mdp" name="mdp" required="required" />
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label" for="mdpV">Vérification du mot de passe</label>
                 <div class="col-sm-4">
-                    <input class="form-control" type="text" id="mdpV" name="mdpV" required="required" />
+                    <input class="form-control" type="password" id="mdpV" name="mdpV" required="required" />
                 </div>
             </div>
             <div>
+                <input type="hidden" name="page" value ="2"/>
                 <input type="submit" value="S'enregistrer" />
             </div>
         </form>

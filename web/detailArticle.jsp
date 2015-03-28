@@ -15,6 +15,7 @@
                 </div>
             </div>
             <div>
+                <input type="hidden" name="page" value ="1"/>
                 <input type="submit" value="Mettre au panier" class="btn btn-default btn-primary"/>
             </div>
         </form>
