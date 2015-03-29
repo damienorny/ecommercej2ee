@@ -29,8 +29,18 @@
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
-                            <li><a href="index?action=connexion">Connexion</a></li>
-                            <li><a href="index?action=inscription">Inscription</a></li>
+                        <c:choose>
+                            <c:when test="${empty isUserRegistered}" >
+                                <li><a href="index?action=connexion">Connexion</a></li>
+                                <li><a href="index?action=inscription">Inscription</a></li>
+                            </c:when>
+                            <c:otherwise>
+                                <li><a href="#">Bienvenue ${sessionScope.user.nom}</a></li>
+                                <li><a href="#">Deconnexion</a></li>
+                            </c:otherwise>
+                        </c:choose>
+                        
+                            
                     </ul>
                 </div>
             </div>

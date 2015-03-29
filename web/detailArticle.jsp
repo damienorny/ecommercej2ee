@@ -5,7 +5,7 @@
     ${article.description}
 </div>
 <div class="well col-md-3 col-md-offset-1">
-    Prix: ${article.prix} &euro;
+    <h2>${article.prix} &euro; <small>prix unitaire TTC</small></h2>
     <form action="#" method="POST" class="fos_user_registration_register form-horizontal">
         <div class="form-group">
             <label class="col-sm-3 control-label" for="qu">Quantité</label>

@@ -169,4 +169,26 @@ public class EcommerceBean {
         disconnectBDD();
         return reponse;
     }
+    
+    public User authenticateUser(String email, String mdp)
+    {
+        User user = null;
+        connectBDD();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM `client` WHERE `email_client` = '" + email + "'");
+            if(rs.next())
+            {
+                String mdpClient = rs.getString("mdp_client");
+                if(mdpClient.equals(mdp))
+                {
+                    user = new User(rs.getLong("id_client"), mdpClient, rs.getString("nom_client"), rs.getString("prenom_client"), rs.getString("adresse_client"));
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EcommerceBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        disconnectBDD();
+        return user;
+    }
 }

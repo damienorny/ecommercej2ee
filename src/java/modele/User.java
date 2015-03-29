@@ -16,6 +16,14 @@ public class User {
     private String prenom;
     private String adresse;
 
+    public User(Long id, String email, String nom, String prenom, String adresse) {
+        this.id = id;
+        this.email = email;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.adresse = adresse;
+    }
+    
     public Long getId() {
         return id;
     }

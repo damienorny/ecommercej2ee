@@ -118,8 +118,24 @@ public class MainServlet extends HttpServlet {
     protected void processPostRequestConnexion(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-       
-        processGetRequestIndex(request, response);
+        HttpSession session = request.getSession();
+        EcommerceBean ecommerceBean = (EcommerceBean) session.getAttribute("ecommerce");
+        String email = request.getParameter("email");
+        String mdp = request.getParameter("mdp");
+        User user = ecommerceBean.authenticateUser(email, mdp);
+        if(user == null)
+        {
+            request.setAttribute("msgError", "Identifiants invalides");
+            RequestDispatcher view = request.getRequestDispatcher("/connexion.jsp");//Mot de passe différents
+            view.forward(request, response);
+        }
+        else
+        {
+            request.setAttribute("msgSuccess", "Connexion réussie");
+            session.setAttribute("isUserRegistered", true);
+            session.setAttribute("user", user);
+            processGetRequestIndex(request, response);
+        }
     }
     
     protected void processPostRequestInscription(HttpServletRequest request, HttpServletResponse response)
