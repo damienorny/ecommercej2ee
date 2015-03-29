@@ -136,7 +136,8 @@ public class MainServlet extends HttpServlet {
             String email = request.getParameter("email");
             if(ecommerceBean.isUserRegistered(email))
             {
-                RequestDispatcher view = request.getRequestDispatcher("/register.jsp");//Déjà enregistré
+                request.setAttribute("msgError", "Un compte existe déjà pour l'adresse email " + email + ". Connectez-vous !");
+                RequestDispatcher view = request.getRequestDispatcher("/connexion.jsp");//Déjà enregistré
                 view.forward(request, response);
             }
             else
@@ -146,11 +147,12 @@ public class MainServlet extends HttpServlet {
                 String adresse = request.getParameter("adresse");
                 ecommerceBean.addUser(nom, prenom, email, mdp, adresse);
             }
-            
+            request.setAttribute("msgSuccess", "Votre compte a bien été enregistré");
             processGetRequestIndex(request, response);
         }
         else
         {
+            request.setAttribute("msgError", "Les mots de passe ne correspondent pas");
             RequestDispatcher view = request.getRequestDispatcher("/register.jsp");//Mot de passe différents
             view.forward(request, response);
         }

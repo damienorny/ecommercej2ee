@@ -37,9 +37,9 @@
                     <input class="form-control" type="password" id="mdpV" name="mdpV" required="required" />
                 </div>
             </div>
-            <div>
+            <div class="col-sm-offset-3">
                 <input type="hidden" name="page" value ="2"/>
-                <input type="submit" value="S'enregistrer" />
+                <input class="btn btn-primary" type="submit" value="S'enregistrer" />
             </div>
         </form>
     </div>
