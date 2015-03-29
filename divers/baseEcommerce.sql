@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Jeu 26 Mars 2015 à 13:56
+-- Généré le :  Dim 29 Mars 2015 à 10:12
 -- Version du serveur :  10.0.17-MariaDB-log
 -- Version de PHP :  5.6.6
 
@@ -90,8 +90,17 @@ CREATE TABLE IF NOT EXISTS `client` (
   `nom_client` varchar(255) NOT NULL,
   `prenom_client` varchar(255) NOT NULL,
   `email_client` varchar(255) NOT NULL,
+  `mdp_client` varchar(255) NOT NULL,
   `adresse_client` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `client`
+--
+
+INSERT INTO `client` (`id_client`, `nom_client`, `prenom_client`, `email_client`, `mdp_client`, `adresse_client`) VALUES
+(1, 'damien', 'damien', 'damien@aa.com', 'damien', 'damien'),
+(2, 'damien', 'damien', 'damien2@aa.com', 'damien', 'damien');
 
 -- --------------------------------------------------------
 
@@ -176,7 +185,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT pour la table `client`
 --
 ALTER TABLE `client`
-  MODIFY `id_client` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_client` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT pour la table `commande`
 --

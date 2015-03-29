@@ -35,7 +35,7 @@ public class EcommerceBean {
             System.out.println("" + cnfe);
         }
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommercej2ee?zeroDateTimeBehavior=convertToNull", "root", "Nico2893!!!");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommercej2ee?zeroDateTimeBehavior=convertToNull", "root", "Paradise");
         } catch (SQLException ex) {
             System.out.println("" + ex);
         }
@@ -131,7 +131,7 @@ public class EcommerceBean {
         connectBDD();
         try {
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM `client` WHERE `email_client` = " + email);
+            ResultSet rs = statement.executeQuery("SELECT * FROM `client` WHERE `email_client` = '" + email + "'");
             if(rs.next())
             {
                 reponse = true;
@@ -154,7 +154,7 @@ public class EcommerceBean {
         connectBDD();
         try {
             PreparedStatement maRequette;
-            maRequette = connection.prepareStatement("INSERT INTO `client`(`nom_client`, `prenom_client`, `email_client`, `mdp`, `adresse_client`) VALUES (?,?,?,?,?)");
+            maRequette = connection.prepareStatement("INSERT INTO `client`(`nom_client`, `prenom_client`, `email_client`, `mdp_client`, `adresse_client`) VALUES (?,?,?,?,?)");
             maRequette.setString(1, nom);
             maRequette.setString(2, prenom);
             maRequette.setString(3, email);
