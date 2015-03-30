@@ -38,6 +38,6 @@
 </div>
 <div class="well col-md-3 col-md-offset-1">
     <h2>${cart.valuePanier} &euro; <small>prix total</small></h2>
-    <a class="btn btn-primary" href="#" <c:if test="${cart.taillePanier == 0}">disabled="disabled"</c:if>>Finaliser ma commande</a>
+    <a class="btn btn-primary" href="index?action=confirmerCommande" <c:if test="${cart.taillePanier == 0}">disabled="disabled"</c:if>>Finaliser ma commande</a>
 </div>
 <%@include file="./footer.jsp" %>

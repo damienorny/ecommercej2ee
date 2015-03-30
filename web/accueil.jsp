@@ -1,11 +1,33 @@
 <%@include file="./header.jsp" %>
-<div class="list-group">
+
+<table class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>Image</th><th>Nom</th><th>Description</th>
+        </tr>
+    </thead>
 <c:forEach items="${listeArticles}" var="article">
-    <a  href="index?action=detailArticle&articleId=${article.id}" class="list-group-item ">
-        <img  src="${article.srcImage}"  style="width:200px;height:128px">
-        <h4 class="list-group-item-heading">${article.nom} <span class="badge">${article.prix} &euro;</span></h4>
-      
-    </a>
+    
+        
+            <tr>
+                <td style="width: 140px">
+                    <a  href="index?action=detailArticle&articleId=${article.id}">
+                        <img  src="${article.srcImage}"  class="" style="width: 140px;height:140px;">
+                    </a>
+                </td>
+                <td style="vertical-align: middle">
+                    <a  href="index?action=detailArticle&articleId=${article.id}">
+                        <h4>${article.nom} <span class="badge">${article.prix} &euro;</span></h4>
+                    </a>
+                </td>
+                <td style="vertical-align: middle">
+                    <a  href="index?action=detailArticle&articleId=${article.id}">
+                        ${article.shortDescription}
+                    </a>
+                </td>
+            </tr>
+        </a>
 </c:forEach>
-</div>
+    </table>
+
 <%@include file="./footer.jsp" %>

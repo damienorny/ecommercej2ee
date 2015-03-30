@@ -63,7 +63,7 @@ public class Cart
         return this.cart.containsKey(article);
     }
     
-    public float getValuePanier()       
+    public Float getValuePanier()       
     {
         float value=0;
        for(Article article : cart.keySet()) {

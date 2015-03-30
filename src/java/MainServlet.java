@@ -100,6 +100,25 @@ public class MainServlet extends HttpServlet {
         view.forward(request, response);
     }
     
+    protected void processGetRequestCommande(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
+        Boolean isUserRegistered = (Boolean) session.getAttribute("isUserRegistered");
+        if(isUserRegistered != null && isUserRegistered == true)
+        {
+            RequestDispatcher view = request.getRequestDispatcher("/confirmer.jsp");
+            view.forward(request, response);
+        }
+        else
+        {
+            RequestDispatcher view = request.getRequestDispatcher("/connexion.jsp");
+            view.forward(request, response);
+        }
+    }
+    
+    
+    
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -139,6 +158,10 @@ public class MainServlet extends HttpServlet {
         else if(action.equals("panier"))
         {
             processGetRequestPanier(request, response);
+        }
+        else if(action.equals("confirmerCommande"))
+        {
+            processGetRequestCommande(request, response);
         }
     }
 
@@ -255,6 +278,20 @@ public class MainServlet extends HttpServlet {
         processGetRequestPanier(request, response);
       
     }
+    
+    protected void processPostRequestValider(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
+        EcommerceBean ecommerceBean = (EcommerceBean) session.getAttribute("ecommerce");
+        Cart cart = (Cart) session.getAttribute("cart");
+        String adresse = request.getParameter("adresse");
+        User user = (User) session.getAttribute("user");
+        ecommerceBean.updateAdresseClient(user, adresse);
+        ecommerceBean.enregistreCommande(user, cart);
+        RequestDispatcher view = request.getRequestDispatcher("/commandeValidee.jsp");
+        view.forward(request, response);
+    }
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -283,11 +320,14 @@ public class MainServlet extends HttpServlet {
         {
             processPostRequestRetirerArticlePanier(request, response);
         }
-         else if(page.equals("rechercherArticle"))
+        else if(page.equals("rechercherArticle"))
         {
             processPostRechercherArticle(request, response);
         }
-        
+        else if(page.equals("commandeValidee"))
+        {
+            processPostRequestValider(request, response);
+        }
     }
 
     /**

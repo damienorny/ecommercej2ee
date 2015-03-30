@@ -67,6 +67,16 @@ public class Article {
     public void setPrix(Float prix) {
         this.prix = prix;
     }
+    
+    public String getShortDescription()
+    {
+        Integer nbCaracteres = 100;
+        if(this.description.length() < nbCaracteres)
+        {
+            nbCaracteres = this.description.length();
+        }
+        return this.description.subSequence(0, nbCaracteres).toString();
+    }
 
     @Override
     public int hashCode() {

@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,7 +36,7 @@ public class EcommerceBean {
             System.out.println("" + cnfe);
         }
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommercej2ee?zeroDateTimeBehavior=convertToNull", "root", "paz");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommercej2ee?zeroDateTimeBehavior=convertToNull", "root", "Paradise");
         } catch (SQLException ex) {
             System.out.println("" + ex);
         }
@@ -183,7 +184,7 @@ public class EcommerceBean {
                 String mdpClient = rs.getString("mdp_client");
                 if(mdpClient.equals(mdp))
                 {
-                    user = new User(rs.getLong("id_client"), mdpClient, rs.getString("nom_client"), rs.getString("prenom_client"), rs.getString("adresse_client"));
+                    user = new User(rs.getLong("id_client"), email, rs.getString("nom_client"), rs.getString("prenom_client"), rs.getString("adresse_client"));
                 }
             }
         } catch (SQLException ex) {
@@ -191,5 +192,51 @@ public class EcommerceBean {
         }
         disconnectBDD();
         return user;
+    }
+    
+    public void updateAdresseClient(User client, String adresse)
+    {
+        connectBDD();
+        try {
+            PreparedStatement maRequette;
+            maRequette = connection.prepareStatement("UPDATE `client` SET `adresse_client` = ? WHERE `client`.`id_client` = ?;");
+            maRequette.setString(1, adresse);
+            maRequette.setString(2, client.getId().toString());
+            maRequette.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(EcommerceBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        disconnectBDD();
+    }
+    
+    public void enregistreCommande(User user, Cart cart)
+    {
+        connectBDD();
+        try {
+            Long key = -1L;
+            
+            PreparedStatement maRequette;
+            maRequette = connection.prepareStatement("INSERT INTO commande (date_commande,prix_commande,id_client) VALUES(?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            maRequette.setString(1, new Date().toString());
+            maRequette.setFloat(2, cart.getValuePanier());
+            maRequette.setInt(3,user.getId().intValue());
+            maRequette.execute();
+            ResultSet rs = maRequette.getGeneratedKeys();
+            rs.next();
+            key = rs.getLong(1);
+            for(Article article: cart.getCart().keySet())
+            {
+                PreparedStatement maRequette2;
+                maRequette2 = connection.prepareStatement("INSERT INTO commande_article (id_commande, id_article, quantite) VALUES(?,?,?)");
+                maRequette2.setInt(1, key.intValue());
+                maRequette2.setInt(2, article.getId().intValue());
+                maRequette2.setInt(3, cart.getCart().get(article));
+                maRequette2.execute();
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(EcommerceBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        disconnectBDD();
     }
 }
