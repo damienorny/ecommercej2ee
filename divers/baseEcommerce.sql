@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Lun 30 Mars 2015 à 15:34
+-- Généré le: Lun 30 Mars 2015 à 18:40
 -- Version du serveur: 5.5.41-0ubuntu0.14.04.1
 -- Version de PHP: 5.5.9-1ubuntu4.7
 
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `article` (
   `prix_article` float NOT NULL,
   `src_article` varchar(255) NOT NULL,
   PRIMARY KEY (`id_article`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- Contenu de la table `article`
@@ -42,7 +42,10 @@ CREATE TABLE IF NOT EXISTS `article` (
 INSERT INTO `article` (`id_article`, `nom_article`, `desc_article`, `prix_article`, `src_article`) VALUES
 (1, 'Article 1', 'Article 1', 12, ''),
 (2, 'Article 2', 'Article 2', 1212, ''),
-(3, 'Clavier', '', 9.99, 'http://images.grosbill.com/imagesproduitnew/imagesgallery/BIG/102873.jpg');
+(3, 'Clavier', '', 9.99, 'http://images.grosbill.com/imagesproduitnew/imagesgallery/BIG/102873.jpg'),
+(4, 'Ordinateur Portable', 'Alienware modéle M17X', 1299, 'http://www.notebookcheck.biz/uploads/tx_nbc2/awareM17X.jpg'),
+(5, 'Voiture Électrique', 'Renault Zoe', 19000, 'http://www.avem.fr/img/vep/zoe_ze.jpg'),
+(6, 'Souris Informatique', 'Souris Gamer avec fil', 60, 'http://media.ldlc.com/ld/products/00/01/32/13/LD0001321389_1.jpg');
 
 -- --------------------------------------------------------
 
