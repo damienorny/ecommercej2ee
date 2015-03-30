@@ -236,15 +236,15 @@ public class MainServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String page = request.getParameter("page");
-        if(page.equals("1"))
+        if(page.equals("detail"))
         {
             processPostRequestDetailArticle(request, response);
         }
-        else if(page.equals("2"))
+        else if(page.equals("register"))
         {
             processPostRequestInscription(request, response);
         }
-        else if(page.equals("3"))
+        else if(page.equals("connexion"))
         {
             processPostRequestConnexion(request, response);
         }

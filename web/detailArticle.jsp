@@ -14,7 +14,7 @@
             </div>
         </div>
         <div>
-            <input type="hidden" name="page" value ="1"/>
+            <input type="hidden" name="page" value ="detail"/>
             <input type="hidden" name="idArticle" value="${article.id}"/>
             <input type="submit" value="Mettre au panier" class="btn btn-default btn-primary"/>
         </div>

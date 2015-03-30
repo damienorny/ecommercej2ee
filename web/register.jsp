@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="col-sm-offset-3">
-                <input type="hidden" name="page" value ="2"/>
+                <input type="hidden" name="page" value ="register"/>
                 <input class="btn btn-primary" type="submit" value="S'enregistrer" />
             </div>
         </form>

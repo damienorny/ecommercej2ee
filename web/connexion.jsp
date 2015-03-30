@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="col-md-offset-3">
-                <input type="hidden" name="page" value ="3"/>
+                <input type="hidden" name="page" value ="connexion"/>
                 <input class="btn btn-primary" type="submit" value="Se connecter" />
             </div>
         </form>
