@@ -46,4 +46,14 @@ public class Cart
     {
         return this.cart;
     }
+    
+    public Integer getTaillePanier()
+    {
+        return this.cart.size();
+    }
+    
+    public Boolean contains(Article article)
+    {
+        return this.cart.containsKey(article);
+    }
 }

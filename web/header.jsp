@@ -7,7 +7,7 @@
 <%@ page import="java.util.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="ecommerce" class="modele.EcommerceBean" scope="session"/>
-
+<jsp:useBean id="cart" class="modele.Cart" scope="session"/>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -29,6 +29,7 @@
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
+                        <li><a href="index?action=panier">Mon panier <span class="badge">${cart.taillePanier}</span></a></li>
                         <c:choose>
                             <c:when test="${empty isUserRegistered}" >
                                 <li><a href="index?action=connexion">Connexion</a></li>
@@ -36,7 +37,7 @@
                             </c:when>
                             <c:otherwise>
                                 <li><a href="#">Bienvenue ${sessionScope.user.nom}</a></li>
-                                <li><a href="#">Deconnexion</a></li>
+                                <li><a href="index?action=deconnexion">Deconnexion</a></li>
                             </c:otherwise>
                         </c:choose>
                         

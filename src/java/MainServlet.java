@@ -81,6 +81,25 @@ public class MainServlet extends HttpServlet {
         view.forward(request, response);
     }
     
+    protected void processGetRequestDeconnexion(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
+        session.removeAttribute("isUserRegistered");
+        session.removeAttribute("user");
+        request.setAttribute("msgSuccess", "Déconnexion réussie");
+        processGetRequestIndex(request, response);
+    }
+    
+    protected void processGetRequestPanier(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
+        
+        RequestDispatcher view = request.getRequestDispatcher("/panier.jsp");
+        view.forward(request, response);
+    }
+    
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -112,6 +131,14 @@ public class MainServlet extends HttpServlet {
         else if(action.equals("accueil"))
         {
             processGetRequestIndex(request, response);
+        }
+        else if(action.equals("deconnexion"))
+        {
+            processGetRequestDeconnexion(request, response);
+        }
+        else if(action.equals("panier"))
+        {
+            processGetRequestPanier(request, response);
         }
     }
 
@@ -162,6 +189,9 @@ public class MainServlet extends HttpServlet {
                 String prenom = request.getParameter("prenom");
                 String adresse = request.getParameter("adresse");
                 ecommerceBean.addUser(nom, prenom, email, mdp, adresse);
+                User user = new User(email, nom, prenom, adresse);
+                session.setAttribute("isUserRegistered", true);
+                session.setAttribute("user", user);
             }
             request.setAttribute("msgSuccess", "Votre compte a bien été enregistré");
             processGetRequestIndex(request, response);
@@ -177,7 +207,20 @@ public class MainServlet extends HttpServlet {
     protected void processPostRequestDetailArticle(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+        HttpSession session = request.getSession();
+        EcommerceBean ecommerceBean = (EcommerceBean) session.getAttribute("ecommerce");
+        Cart cart = (Cart) session.getAttribute("cart");
+        Long idArticle = Long.parseLong(request.getParameter("idArticle"));
+        Integer quantite = Integer.parseInt(request.getParameter("quantite"));
+        Article article = ecommerceBean.getArticleById(idArticle);
+        if(cart.contains(article))
+        {
+            cart.updateItem(article, quantite);
+        }
+        else
+        {
+            cart.addItem(article, quantite);
+        }
         processGetRequestIndex(request, response);
     }
     

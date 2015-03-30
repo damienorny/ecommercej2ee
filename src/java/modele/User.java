@@ -23,6 +23,15 @@ public class User {
         this.prenom = prenom;
         this.adresse = adresse;
     }
+
+    public User(String email, String nom, String prenom, String adresse) {
+        this.email = email;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.adresse = adresse;
+    }
+    
+    
     
     public Long getId() {
         return id;
