@@ -164,7 +164,22 @@ public class MainServlet extends HttpServlet {
             processGetRequestIndex(request, response);
         }
     }
-    
+    protected void processPostRechercherArticle(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
+        /*EcommerceBean ecommerceBean = (EcommerceBean) session.getAttribute("ecommerce");
+        Cart cart = (Cart) session.getAttribute("cart");
+        Long idArticle = Long.parseLong(request.getParameter("idArticle"));
+        Integer quantite = Integer.parseInt(request.getParameter("quantite"));
+        Article article = ecommerceBean.getArticleById(idArticle);
+
+        cart.addItem(article, quantite);*/
+        //request.setAttribute("msgError", "Les mots de passe ne correspondent pas");
+        RequestDispatcher view = request.getRequestDispatcher("/accueil.jsp");//Mot de passe différents
+         view.forward(request, response);
+    }
+
     protected void processPostRequestInscription(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -268,6 +283,11 @@ public class MainServlet extends HttpServlet {
         {
             processPostRequestRetirerArticlePanier(request, response);
         }
+         else if(page.equals("rechercherArticle"))
+        {
+            processPostRechercherArticle(request, response);
+        }
+        
     }
 
     /**
