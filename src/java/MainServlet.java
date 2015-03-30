@@ -213,14 +213,9 @@ public class MainServlet extends HttpServlet {
         Long idArticle = Long.parseLong(request.getParameter("idArticle"));
         Integer quantite = Integer.parseInt(request.getParameter("quantite"));
         Article article = ecommerceBean.getArticleById(idArticle);
-        if(cart.contains(article))
-        {
-            cart.updateItem(article, quantite);
-        }
-        else
-        {
-            cart.addItem(article, quantite);
-        }
+
+        cart.addItem(article, quantite);
+        
         processGetRequestIndex(request, response);
     }
     
