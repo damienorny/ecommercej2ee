@@ -35,7 +35,7 @@ public class EcommerceBean {
             System.out.println("" + cnfe);
         }
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommercej2ee?zeroDateTimeBehavior=convertToNull", "root", "paz");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommercej2ee?zeroDateTimeBehavior=convertToNull", "root", "Paradise");
         } catch (SQLException ex) {
             System.out.println("" + ex);
         }

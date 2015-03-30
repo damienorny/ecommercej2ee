@@ -50,16 +50,17 @@ public class Cart
     
     public Integer getTaillePanier()
     {
-        return this.cart.size();
+        Integer nombreArticles = 0;
+        for(Article article : cart.keySet())
+        {
+            nombreArticles += cart.get(article);
+        }
+        return nombreArticles;
     }
     
     public Boolean contains(Article article)
     {
         return this.cart.containsKey(article);
-    }
-    public int getNumArticle(Article article)
-    {
-        return cart.get(article);
     }
     
     public float getValuePanier()       

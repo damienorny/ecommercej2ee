@@ -229,7 +229,7 @@ public class MainServlet extends HttpServlet {
         Integer quantite = Integer.parseInt(request.getParameter("quantite"));
         Article article = ecommerceBean.getArticleById(idArticle);
         
-         if(quantite==0)
+        if(quantite==0)
         {
             cart.removeItem(article);
         }
@@ -237,8 +237,7 @@ public class MainServlet extends HttpServlet {
         {
             cart.updateItem(article, quantite);
         }
-        
-        processGetRequestIndex(request, response);
+        processGetRequestPanier(request, response);
       
     }
     /**

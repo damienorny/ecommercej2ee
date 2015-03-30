@@ -29,7 +29,7 @@
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="index?action=panier">Mon panier <span class="badge">${cart.taillePanier} = ${cart.valuePanier}€</span></a></li>
+                        <li><a href="index?action=panier">Mon panier <span class="badge">${cart.taillePanier}</span></a></li>
                         <c:choose>
                             <c:when test="${empty isUserRegistered}" >
                                 <li><a href="index?action=connexion">Connexion</a></li>
