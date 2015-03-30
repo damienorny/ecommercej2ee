@@ -16,12 +16,24 @@ public class Article {
     private String nom;
     private String description;
     private Float prix;
+    private String srcImage;
 
-    public Article(Long id, String nom, String description, Float prix) {
+    public void setSrcImage(String srcImage) {
+        this.srcImage = srcImage;
+    }
+
+    public String getSrcImage() {
+        return srcImage;
+    }
+
+    
+
+    public Article(Long id, String nom, String description, Float prix, String srcImage) {
         this.id = id;
         this.nom = nom;
         this.description = description;
         this.prix = prix;
+        this.srcImage = srcImage;
     }
 
     public String getNom() {

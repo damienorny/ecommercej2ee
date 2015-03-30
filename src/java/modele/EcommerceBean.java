@@ -62,7 +62,7 @@ public class EcommerceBean {
             ResultSet rs = statement.executeQuery("SELECT * FROM article");
             while(rs.next())
             {
-                liste.add(new Article(rs.getLong("id_article"), rs.getString("nom_article"), rs.getString("nom_article"), rs.getFloat("prix_article")));
+                liste.add(new Article(rs.getLong("id_article"), rs.getString("nom_article"), rs.getString("desc_article"), rs.getFloat("prix_article"), rs.getString("src_article")));
             }
         } catch (SQLException ex) {
             Logger.getLogger(EcommerceBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -80,7 +80,7 @@ public class EcommerceBean {
             ResultSet rs = statement.executeQuery("SELECT * FROM article WHERE id_article = " + id.toString());
             if(rs.next())
             {
-                article = new Article(id, rs.getString("nom_article"), rs.getString("nom_article"), rs.getFloat("prix_article"));
+                article = new Article(id, rs.getString("nom_article"), rs.getString("nom_article"), rs.getFloat("prix_article"),rs.getString("src_article"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(EcommerceBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -98,7 +98,7 @@ public class EcommerceBean {
             ResultSet rs = statement.executeQuery("SELECT * FROM `category_article` LEFT JOIN article ON category_article.id_article = article.id_article WHERE `id_category` = " + category.getId().toString());
             while(rs.next())
             {
-                liste.add(new Article(rs.getLong("id_article"), rs.getString("nom_article"), rs.getString("description_article"), rs.getFloat("prix_article")));
+                liste.add(new Article(rs.getLong("id_article"), rs.getString("nom_article"), rs.getString("description_article"), rs.getFloat("prix_article"), rs.getString("src_article")));
             }
         } catch (SQLException ex) {
             Logger.getLogger(EcommerceBean.class.getName()).log(Level.SEVERE, null, ex);
