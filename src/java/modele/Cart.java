@@ -7,6 +7,7 @@ package modele;
 
 import java.util.HashMap;
 
+
 /**
  *
  * @author mathieu
@@ -56,4 +57,16 @@ public class Cart
     {
         return this.cart.containsKey(article);
     }
+    
+    public float getValuePanier()       
+    {
+        float value=0;
+       for(Article article : cart.keySet()) {
+    value+= article.getPrix()*cart.get(article);
+    
+       }
+        return value;
+    }
+    
+    
 }

@@ -35,7 +35,7 @@ public class EcommerceBean {
             System.out.println("" + cnfe);
         }
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommercej2ee?zeroDateTimeBehavior=convertToNull", "root", "Paradise");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommercej2ee?zeroDateTimeBehavior=convertToNull", "root", "paz");
         } catch (SQLException ex) {
             System.out.println("" + ex);
         }
@@ -124,6 +124,7 @@ public class EcommerceBean {
         disconnectBDD();
         return category;
     }
+    
     
     public boolean isUserRegistered(String email)
     {
