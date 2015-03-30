@@ -8,7 +8,7 @@
         </a>
             <form  method="POST" >
             <input class="form-control" type="number" id="quantite" name="quantite" required="required" min="1" value="1"/>
-            <input type="hidden" name="page" value ="modifierValeur"/>
+            <input type="hidden" name="page" value ="retirerArticle"/>
             <input type="hidden" name="idArticle" value="${article.key.id}"/>
             <input type="submit" value="Modifier" class="btn btn-default btn-primary"/>
             </form>
