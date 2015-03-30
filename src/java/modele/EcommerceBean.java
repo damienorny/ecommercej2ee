@@ -36,7 +36,7 @@ public class EcommerceBean {
             System.out.println("" + cnfe);
         }
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommercej2ee?zeroDateTimeBehavior=convertToNull", "root", "Paradise");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommercej2ee?zeroDateTimeBehavior=convertToNull", "root", "paz");
         } catch (SQLException ex) {
             System.out.println("" + ex);
         }
@@ -89,7 +89,45 @@ public class EcommerceBean {
         disconnectBDD();
         return article;
     }
-    
+    public ArrayList<Article> getAllArticlesByName(String nomSearch)
+    {
+        ArrayList<Article> liste = new ArrayList<>();
+        
+        connectBDD();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM `article`");
+            while(rs.next())
+            {   
+                if(rs.getString("nom_article").contains(nomSearch) ||rs.getString("desc_article").contains(nomSearch) )
+                liste.add(new Article(rs.getLong("id_article"), rs.getString("nom_article"), rs.getString("desc_article"), rs.getFloat("prix_article"), rs.getString("src_article")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EcommerceBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        disconnectBDD();
+        return liste;
+    }
+
+
+
+     public Category getResearchCategory(String categorie)
+    {
+        Category category = null;
+        connectBDD();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM `category`  WHERE `nom_category` = '" + categorie +"'" );
+            if(rs.next())
+            {
+                category = new Category(rs.getLong("id_category"), rs.getString("nom_category"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EcommerceBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        disconnectBDD();
+        return category;
+    }
     public ArrayList<Article> getAllArticlesByCategory(Category category)
     {
         ArrayList<Article> liste = new ArrayList<>();
@@ -99,7 +137,7 @@ public class EcommerceBean {
             ResultSet rs = statement.executeQuery("SELECT * FROM `category_article` LEFT JOIN article ON category_article.id_article = article.id_article WHERE `id_category` = " + category.getId().toString());
             while(rs.next())
             {
-                liste.add(new Article(rs.getLong("id_article"), rs.getString("nom_article"), rs.getString("description_article"), rs.getFloat("prix_article"), rs.getString("src_article")));
+                liste.add(new Article(rs.getLong("id_article"), rs.getString("nom_article"), rs.getString("desc_article"), rs.getFloat("prix_article"), rs.getString("src_article")));
             }
         } catch (SQLException ex) {
             Logger.getLogger(EcommerceBean.class.getName()).log(Level.SEVERE, null, ex);

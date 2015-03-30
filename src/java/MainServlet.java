@@ -187,21 +187,7 @@ public class MainServlet extends HttpServlet {
             processGetRequestIndex(request, response);
         }
     }
-    protected void processPostRechercherArticle(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        /*EcommerceBean ecommerceBean = (EcommerceBean) session.getAttribute("ecommerce");
-        Cart cart = (Cart) session.getAttribute("cart");
-        Long idArticle = Long.parseLong(request.getParameter("idArticle"));
-        Integer quantite = Integer.parseInt(request.getParameter("quantite"));
-        Article article = ecommerceBean.getArticleById(idArticle);
-
-        cart.addItem(article, quantite);*/
-        //request.setAttribute("msgError", "Les mots de passe ne correspondent pas");
-        RequestDispatcher view = request.getRequestDispatcher("/accueil.jsp");//Mot de passe différents
-         view.forward(request, response);
-    }
+    
 
     protected void processPostRequestInscription(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -241,7 +227,35 @@ public class MainServlet extends HttpServlet {
             view.forward(request, response);
         }
     }
-    
+     protected void processPostRechercherArticle(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+            HttpSession session = request.getSession();
+        String nomSearch = request.getParameter("nomSearch");
+        EcommerceBean ecommerceBean = (EcommerceBean) session.getAttribute("ecommerce");
+        //Cart cart = (Cart) session.getAttribute("cart");
+        Category category=ecommerceBean.getResearchCategory(nomSearch);
+        ArrayList<Article> listeArticles=null;
+        
+        if(category!=null)
+        {   
+           listeArticles=ecommerceBean.getAllArticlesByCategory(category); 
+           
+            
+            
+        }
+        
+        else
+        {
+            
+            listeArticles = ecommerceBean.getAllArticlesByName(nomSearch);
+            
+            
+        }
+        request.setAttribute("listeArticles", listeArticles);
+        RequestDispatcher view = request.getRequestDispatcher("/accueil.jsp");
+        view.forward(request, response);
+     }
     protected void processPostRequestDetailArticle(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -328,6 +342,7 @@ public class MainServlet extends HttpServlet {
         {
             processPostRequestValider(request, response);
         }
+       
     }
 
     /**

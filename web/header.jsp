@@ -29,9 +29,9 @@
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <form class="navbar-form navbar-left"  method="POST" role="search">
+                       <form class="navbar-form navbar-left"  method="POST" role="search">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search" id="nomArticle" >
+                                <input type="text" class="form-control" placeholder="Search" name="nomSearch" >
                              <input type="hidden" name="page" value ="rechercherArticle"/>
                              </div>
                             <button type="submit" class="btn btn-default">Submit</button>
