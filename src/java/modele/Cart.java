@@ -57,6 +57,10 @@ public class Cart
     {
         return this.cart.containsKey(article);
     }
+    public int getNumArticle(Article article)
+    {
+        return cart.get(article);
+    }
     
     public float getValuePanier()       
     {

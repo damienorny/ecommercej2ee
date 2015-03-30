@@ -224,6 +224,28 @@ public class MainServlet extends HttpServlet {
         processGetRequestIndex(request, response);
     }
     
+    protected void processPostRequestRetirerArticlePanier(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
+        EcommerceBean ecommerceBean = (EcommerceBean) session.getAttribute("ecommerce");
+        Cart cart = (Cart) session.getAttribute("cart");
+        Long idArticle = Long.parseLong(request.getParameter("idArticle"));
+        Integer quantite = Integer.parseInt(request.getParameter("quantite"));
+        Article article = ecommerceBean.getArticleById(idArticle);
+        
+         if(quantite==0)
+        {
+            cart.removeItem(article);
+        }
+         else
+        {
+            cart.updateItem(article, quantite);
+        }
+        
+        processGetRequestIndex(request, response);
+      
+    }
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -247,6 +269,10 @@ public class MainServlet extends HttpServlet {
         else if(page.equals("connexion"))
         {
             processPostRequestConnexion(request, response);
+        }
+        else if(page.equals("retirerArticle"))
+        {
+            processPostRequestRetirerArticlePanier(request, response);
         }
     }
 
