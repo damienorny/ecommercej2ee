@@ -24,7 +24,7 @@ public class EcommerceBean {
     private Connection connection;
     
     /**
-     *
+     *Permet de se connecter à la BDD
      */
     private void connectBDD()
     {
@@ -46,7 +46,7 @@ public class EcommerceBean {
     }
     
     /**
-     *
+     *Permet de se déconnecter de la BDD
      */
     private void disconnectBDD()
     {
@@ -60,6 +60,10 @@ public class EcommerceBean {
         }
     }
     
+    /**
+     * Fonction qui renvoie une liste d'articles
+     * @return 
+     */
     public ArrayList<Article> getAllArticles()
     {
         ArrayList<Article> liste = new ArrayList();
@@ -81,6 +85,11 @@ public class EcommerceBean {
         return liste;
     }
     
+    /**
+     * Fonction qui renvoie un article selon son id
+     * @param id
+     * @return 
+     */
     public Article getArticleById(Long id)
     {
         Article article = null;
@@ -101,6 +110,12 @@ public class EcommerceBean {
         disconnectBDD();
         return article;
     }
+    
+    /**
+     * Fonction qui renvoie tout les articles contenant nomSearch
+     * @param nomSearch
+     * @return 
+     */
     public ArrayList<Article> getAllArticlesByName(String nomSearch)
     {
         ArrayList<Article> liste = new ArrayList<>();
@@ -112,6 +127,7 @@ public class EcommerceBean {
             ResultSet rs = statement.executeQuery("SELECT * FROM `article`");
             while(rs.next())
             {   
+                //Permet de chercher une correspondance dans la description et le nom d'un article
                 if(rs.getString("nom_article").toLowerCase().contains(nomSearch.toLowerCase()) || rs.getString("desc_article").toLowerCase().contains(nomSearch.toLowerCase()) )
                 liste.add(new Article(rs.getLong("id_article"), rs.getString("nom_article"), rs.getString("desc_article"), rs.getFloat("prix_article"), rs.getString("src_article")));
             }
@@ -123,10 +139,13 @@ public class EcommerceBean {
         disconnectBDD();
         return liste;
     }
-
-
-
-     public Category getResearchCategory(String categorie)
+    
+    /**
+     * Fonction qui dit si une catégorie existe
+     * @param categorie
+     * @return 
+     */
+    public Category getResearchCategory(String categorie)
     {
         Category category = null;
         connectBDD();
@@ -146,6 +165,12 @@ public class EcommerceBean {
         disconnectBDD();
         return category;
     }
+    
+    /**
+     * Fonction qui renvoie les article d'une catégorie
+     * @param category
+     * @return 
+     */
     public ArrayList<Article> getAllArticlesByCategory(Category category)
     {
         ArrayList<Article> liste = new ArrayList<>();
@@ -167,6 +192,11 @@ public class EcommerceBean {
         return liste;
     }
     
+    /**
+     * Fonction qui permet d'obtenir la catégorie d'un article
+     * @param article
+     * @return 
+     */
     public Category getArticleCategory(Article article)
     {
         Category category = null;
@@ -188,7 +218,11 @@ public class EcommerceBean {
         return category;
     }
     
-    
+    /**
+     * Fonction qui permet de vérifier si un utilisateur est dans la base
+     * @param email
+     * @return 
+     */
     public boolean isUserRegistered(String email)
     {
         boolean reponse;
@@ -215,6 +249,15 @@ public class EcommerceBean {
         return reponse;
     }
     
+    /**
+     * Fonction qui ajoute un utilisateur
+     * @param nom
+     * @param prenom
+     * @param email
+     * @param mdp
+     * @param adresse
+     * @return 
+     */
     public User addUser(String nom, String prenom, String email, String mdp, String adresse)
     {
         User user = null;
@@ -223,6 +266,7 @@ public class EcommerceBean {
         try 
         {
             PreparedStatement maRequette;
+            //Demande un retour des champs auto-générés, ici l'id
             maRequette = connection.prepareStatement("INSERT INTO `client`(`nom_client`, `prenom_client`, `email_client`, `mdp_client`, `adresse_client`) VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             maRequette.setString(1, nom);
             maRequette.setString(2, prenom);
@@ -232,7 +276,7 @@ public class EcommerceBean {
             maRequette.execute();
             ResultSet rs = maRequette.getGeneratedKeys();
             rs.next();
-            key = rs.getLong(1);
+            key = rs.getLong(1);//Récupère l'id et le place dans key
             user = new User(key, email, nom, prenom, adresse);
         } 
         catch (SQLException ex)
@@ -243,6 +287,12 @@ public class EcommerceBean {
         return user;
     }
     
+    /**
+     * Fonction qui permet de vérifier la correspondance d'un email et d'un mot de passe
+     * @param email
+     * @param mdp
+     * @return 
+     */
     public User authenticateUser(String email, String mdp)
     {
         User user = null;
@@ -268,6 +318,11 @@ public class EcommerceBean {
         return user;
     }
     
+    /**
+     * Fonction qui permet de mettre à jour l'adresse d'un utilisateur
+     * @param client
+     * @param adresse 
+     */
     public void updateAdresseClient(User client, String adresse)
     {
         connectBDD();
@@ -286,6 +341,11 @@ public class EcommerceBean {
         disconnectBDD();
     }
     
+    /**
+     * Fonction qui ajoute une commande
+     * @param user
+     * @param cart 
+     */
     public void enregistreCommande(User user, Cart cart)
     {
         connectBDD();
@@ -294,6 +354,7 @@ public class EcommerceBean {
             Long key = -1L;
             
             PreparedStatement maRequette;
+            //Demande un retour des champs auto-générés, ici l'id
             maRequette = connection.prepareStatement("INSERT INTO commande (date_commande,prix_commande,id_client) VALUES(?,?,?)", Statement.RETURN_GENERATED_KEYS);
             maRequette.setString(1, new Date().toString());
             maRequette.setFloat(2, cart.getValuePanier());
@@ -301,7 +362,7 @@ public class EcommerceBean {
             maRequette.execute();
             ResultSet rs = maRequette.getGeneratedKeys();
             rs.next();
-            key = rs.getLong(1);
+            key = rs.getLong(1);//Récupère l'id et le place dans key
             for(Article article: cart.getCart().keySet())
             {
                 PreparedStatement maRequette2;
