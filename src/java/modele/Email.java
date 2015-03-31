@@ -24,10 +24,18 @@ public final class Email
 
     private final static String MAILER_VERSION = "Java";
     
+    /**
+     * Permet d'envoyer un mail à l'utilisateur
+     * @param user
+     * @param cart
+     * @return 
+     */
     public static boolean envoyerMailSMTP(User user, Cart cart) 
     {
-        final String username="mathieu.gerard@edu.esiee.fr";
-        final String password="Nico2893!!!";
+        //Remplacez email et mot de passe par des identifiants gmail valide.
+        final String username="Email";
+        final String password="MotDePasse";
+        //
         Properties prop=new Properties();
         prop.put("mail.smtp.auth", "true");
         prop.put("mail.smtp.host", "smtp.gmail.com");

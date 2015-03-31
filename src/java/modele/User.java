@@ -31,8 +31,6 @@ public class User {
         this.adresse = adresse;
     }
     
-    
-    
     public Long getId() {
         return id;
     }
