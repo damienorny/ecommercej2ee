@@ -1,6 +1,6 @@
 <%@include file="./header.jsp" %>
     <div class="well">
-        <form action="index" method="POST" class="fos_user_registration_register form-horizontal">
+        <form action="index" method="POST" class="fos_user_registration_register form-horizontal" accept-charset="ISO-8859-1">
             <div class="form-group">
                 <label class="col-sm-3 control-label" for="nom">Nom</label>
                 <div class="col-sm-4">
@@ -22,7 +22,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label" for="email">Email</label>
                 <div class="col-sm-4">
-                    <input class="form-control" type="text" id="email" name="email" required="required" />
+                    <input class="form-control" type="email" id="email" name="email" required="required" />
                 </div>
             </div>
             <div class="form-group">
