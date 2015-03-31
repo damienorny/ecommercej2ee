@@ -3,7 +3,7 @@
 <table class="table table-hover table-bordered">
     <thead>
         <tr>
-            <th>Image</th><th>Nom</th><th>Description</th>
+            <th>Image</th><th>Nom</th>
         </tr>
     </thead>
 <c:forEach items="${listeArticles}" var="article">
@@ -20,11 +20,7 @@
                         <h4>${article.nom} <span class="badge">${article.prix} &euro;</span></h4>
                     </a>
                 </td>
-                <td style="vertical-align: middle">
-                    <a  href="index?action=detailArticle&articleId=${article.id}">
-                        ${article.shortDescription}
-                    </a>
-                </td>
+                
             </tr>
         </a>
 </c:forEach>

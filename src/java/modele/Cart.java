@@ -38,6 +38,11 @@ public class Cart
         cart.remove(article);
     }
     
+    public void clearPanier()
+    {
+        cart.clear();
+    }
+    
     public void updateItem(Article article, Integer nombre)
     {
         cart.replace(article, nombre);

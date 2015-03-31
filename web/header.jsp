@@ -44,7 +44,7 @@
                                 <li><a href="index?action=inscription">Inscription</a></li>
                             </c:when>
                             <c:otherwise>
-                                <li><a href="#">Bienvenue ${sessionScope.user.nom}</a></li>
+                                <li><a href="#">Bienvenue ${sessionScope.user.prenom}</a></li>
                                 <li><a href="index?action=deconnexion">Deconnexion</a></li>
                             </c:otherwise>
                         </c:choose>

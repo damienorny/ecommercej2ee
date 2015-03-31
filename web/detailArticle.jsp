@@ -1,12 +1,12 @@
 <%@include file="./header.jsp" %>
 <div class="well col-md-8">
     <h1>${article.nom}</h1>
-
+    <img width="100%" src="${article.srcImage}">
     ${article.description}
 </div>
 <div class="well col-md-3 col-md-offset-1">
     <h2>${article.prix} &euro; <small>prix unitaire</small></h2>
-    <form action="#" method="POST" class="fos_user_registration_register form-horizontal">
+    <form action="#" method="POST" class="form-horizontal">
         <div class="form-group">
             <label class="col-sm-3 control-label" for="qu">Quantité</label>
             <div class="col-sm-4">

@@ -37,7 +37,7 @@ public class EcommerceBean {
         }
         try 
         {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommercej2ee?zeroDateTimeBehavior=convertToNull", "root", "Nico2893!!!");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommercej2ee?zeroDateTimeBehavior=convertToNull", "root", "Paradise");
         } 
         catch (SQLException ex) 
         {
@@ -91,7 +91,7 @@ public class EcommerceBean {
             ResultSet rs = statement.executeQuery("SELECT * FROM article WHERE id_article = " + id.toString());
             if(rs.next())
             {
-                article = new Article(id, rs.getString("nom_article"), rs.getString("nom_article"), rs.getFloat("prix_article"),rs.getString("src_article"));
+                article = new Article(id, rs.getString("nom_article"), rs.getString("desc_article"), rs.getFloat("prix_article"),rs.getString("src_article"));
             }
         } 
         catch (SQLException ex) 
@@ -112,7 +112,7 @@ public class EcommerceBean {
             ResultSet rs = statement.executeQuery("SELECT * FROM `article`");
             while(rs.next())
             {   
-                if(rs.getString("nom_article").contains(nomSearch) || rs.getString("desc_article").contains(nomSearch) )
+                if(rs.getString("nom_article").toLowerCase().contains(nomSearch.toLowerCase()) || rs.getString("desc_article").toLowerCase().contains(nomSearch.toLowerCase()) )
                 liste.add(new Article(rs.getLong("id_article"), rs.getString("nom_article"), rs.getString("desc_article"), rs.getFloat("prix_article"), rs.getString("src_article")));
             }
         } 
@@ -215,29 +215,32 @@ public class EcommerceBean {
         return reponse;
     }
     
-    public boolean addUser(String nom, String prenom, String email, String mdp, String adresse)
+    public User addUser(String nom, String prenom, String email, String mdp, String adresse)
     {
-        boolean reponse;
+        User user = null;
+        Long key = -1L;
         connectBDD();
         try 
         {
             PreparedStatement maRequette;
-            maRequette = connection.prepareStatement("INSERT INTO `client`(`nom_client`, `prenom_client`, `email_client`, `mdp_client`, `adresse_client`) VALUES (?,?,?,?,?)");
+            maRequette = connection.prepareStatement("INSERT INTO `client`(`nom_client`, `prenom_client`, `email_client`, `mdp_client`, `adresse_client`) VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             maRequette.setString(1, nom);
             maRequette.setString(2, prenom);
             maRequette.setString(3, email);
             maRequette.setString(4, mdp);
             maRequette.setString(5, adresse);
             maRequette.execute();
-            reponse = true;
+            ResultSet rs = maRequette.getGeneratedKeys();
+            rs.next();
+            key = rs.getLong(1);
+            user = new User(key, email, nom, prenom, adresse);
         } 
-        catch (SQLException ex) 
+        catch (SQLException ex)
         {
-            Logger.getLogger(EcommerceBean.class.getName()).log(Level.SEVERE, null, ex);
-            reponse = false; 
+            Logger.getLogger(EcommerceBean.class.getName()).log(Level.SEVERE, null, ex); 
         }
         disconnectBDD();
-        return reponse;
+        return user;
     }
     
     public User authenticateUser(String email, String mdp)

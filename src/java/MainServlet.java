@@ -87,6 +87,7 @@ public class MainServlet extends HttpServlet {
         HttpSession session = request.getSession();
         session.removeAttribute("isUserRegistered");
         session.removeAttribute("user");
+        session.removeAttribute("nextPage");
         request.setAttribute("msgSuccess", "Déconnexion réussie");
         processGetRequestIndex(request, response);
     }
@@ -112,8 +113,8 @@ public class MainServlet extends HttpServlet {
         }
         else
         {
-            RequestDispatcher view = request.getRequestDispatcher("/connexion.jsp");
-            view.forward(request, response);
+            session.setAttribute("nextPage", "validation");
+            processGetRequestConnexion(request, response);
         }
     }
     
@@ -184,7 +185,16 @@ public class MainServlet extends HttpServlet {
             request.setAttribute("msgSuccess", "Connexion réussie");
             session.setAttribute("isUserRegistered", true);
             session.setAttribute("user", user);
-            processGetRequestIndex(request, response);
+            if(session.getAttribute("nextPage") != null && session.getAttribute("nextPage").equals("validation"))
+            {
+                session.removeAttribute("nextPage");
+                processGetRequestCommande(request, response);
+            }
+            else
+            {
+                processGetRequestIndex(request, response);
+            }
+            
         }
     }
     
@@ -212,10 +222,19 @@ public class MainServlet extends HttpServlet {
                 String nom = request.getParameter("nom");
                 String prenom = request.getParameter("prenom");
                 String adresse = request.getParameter("adresse");
-                ecommerceBean.addUser(nom, prenom, email, mdp, adresse);
-                User user = new User(email, nom, prenom, adresse);
+                User user = ecommerceBean.addUser(nom, prenom, email, mdp, adresse);
+                //User user = new User(email, nom, prenom, adresse);
                 session.setAttribute("isUserRegistered", true);
                 session.setAttribute("user", user);
+                if(session.getAttribute("nextPage") != null && session.getAttribute("nextPage").equals("validation"))
+                {
+                    session.removeAttribute("nextPage");
+                    processGetRequestCommande(request, response);
+                }
+                else
+                {
+                    processGetRequestIndex(request, response);
+                }
             }
             request.setAttribute("msgSuccess", "Votre compte a bien été enregistré");
             processGetRequestIndex(request, response);
@@ -295,10 +314,11 @@ public class MainServlet extends HttpServlet {
         String adresse = request.getParameter("adresse");
         User user = (User) session.getAttribute("user");
         ecommerceBean.updateAdresseClient(user, adresse);
+        user.setAdresse(adresse);
         ecommerceBean.enregistreCommande(user, cart);
 
         Email.envoyerMailSMTP(user, cart);
-            
+        cart.clearPanier();
         request.setAttribute("msgSuccess", "Votre commande a été enregistrée, vous recevrez prochainement un mail vous confirmant votre commande!");
         processGetRequestIndex(request, response);
     }
