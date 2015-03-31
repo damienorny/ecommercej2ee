@@ -23,7 +23,7 @@
                             <input type="hidden" name="idArticle" value="${article.key.id}"/>
                             <div class="input-group">
                                 <div class="input-group-addon">Quantité</div>
-                                <input class="form-control" type="number" id="quantite" name="quantite" required="required" min="1" value="${article.value}"/>
+                                <input class="form-control" type="number" id="quantite" name="quantite" required="required" min="1" max="5000" value="${article.value}"/>
                                 <span class="input-group-btn">
                                     <input type="submit" value="Modifier" class="btn btn-default btn-primary"/>
                                 </span>

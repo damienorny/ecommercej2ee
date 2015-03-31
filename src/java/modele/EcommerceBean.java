@@ -35,9 +35,12 @@ public class EcommerceBean {
         } catch (ClassNotFoundException cnfe){
             System.out.println("" + cnfe);
         }
-        try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommercej2ee?zeroDateTimeBehavior=convertToNull", "root", "paz");
-        } catch (SQLException ex) {
+        try 
+        {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommercej2ee?zeroDateTimeBehavior=convertToNull", "root", "Nico2893!!!");
+        } 
+        catch (SQLException ex) 
+        {
             System.out.println("" + ex);
         }
     }
@@ -47,9 +50,12 @@ public class EcommerceBean {
      */
     private void disconnectBDD()
     {
-        try {
+        try 
+        {
             connection.close();
-        } catch (SQLException ex) {
+        } 
+        catch (SQLException ex) 
+        {
             Logger.getLogger(EcommerceBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -58,14 +64,17 @@ public class EcommerceBean {
     {
         ArrayList<Article> liste = new ArrayList();
         connectBDD();
-        try {
+        try 
+        {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM article");
             while(rs.next())
             {
                 liste.add(new Article(rs.getLong("id_article"), rs.getString("nom_article"), rs.getString("desc_article"), rs.getFloat("prix_article"), rs.getString("src_article")));
             }
-        } catch (SQLException ex) {
+        } 
+        catch (SQLException ex) 
+        {
             Logger.getLogger(EcommerceBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         disconnectBDD();
@@ -76,14 +85,17 @@ public class EcommerceBean {
     {
         Article article = null;
         connectBDD();
-        try {
+        try 
+        {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM article WHERE id_article = " + id.toString());
             if(rs.next())
             {
                 article = new Article(id, rs.getString("nom_article"), rs.getString("nom_article"), rs.getFloat("prix_article"),rs.getString("src_article"));
             }
-        } catch (SQLException ex) {
+        } 
+        catch (SQLException ex) 
+        {
             Logger.getLogger(EcommerceBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         disconnectBDD();
@@ -94,15 +106,18 @@ public class EcommerceBean {
         ArrayList<Article> liste = new ArrayList<>();
         
         connectBDD();
-        try {
+        try 
+        {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM `article`");
             while(rs.next())
             {   
-                if(rs.getString("nom_article").contains(nomSearch) ||rs.getString("desc_article").contains(nomSearch) )
+                if(rs.getString("nom_article").contains(nomSearch) || rs.getString("desc_article").contains(nomSearch) )
                 liste.add(new Article(rs.getLong("id_article"), rs.getString("nom_article"), rs.getString("desc_article"), rs.getFloat("prix_article"), rs.getString("src_article")));
             }
-        } catch (SQLException ex) {
+        } 
+        catch (SQLException ex) 
+        {
             Logger.getLogger(EcommerceBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         disconnectBDD();
@@ -115,14 +130,17 @@ public class EcommerceBean {
     {
         Category category = null;
         connectBDD();
-        try {
+        try 
+        {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM `category`  WHERE `nom_category` = '" + categorie +"'" );
             if(rs.next())
             {
                 category = new Category(rs.getLong("id_category"), rs.getString("nom_category"));
             }
-        } catch (SQLException ex) {
+        } 
+        catch (SQLException ex) 
+        {
             Logger.getLogger(EcommerceBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         disconnectBDD();
@@ -132,14 +150,17 @@ public class EcommerceBean {
     {
         ArrayList<Article> liste = new ArrayList<>();
         connectBDD();
-        try {
+        try 
+        {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM `category_article` LEFT JOIN article ON category_article.id_article = article.id_article WHERE `id_category` = " + category.getId().toString());
             while(rs.next())
             {
                 liste.add(new Article(rs.getLong("id_article"), rs.getString("nom_article"), rs.getString("desc_article"), rs.getFloat("prix_article"), rs.getString("src_article")));
             }
-        } catch (SQLException ex) {
+        } 
+        catch (SQLException ex) 
+        {
             Logger.getLogger(EcommerceBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         disconnectBDD();
@@ -150,14 +171,17 @@ public class EcommerceBean {
     {
         Category category = null;
         connectBDD();
-        try {
+        try 
+        {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM `category_article` LEFT JOIN category ON category_article.id_category = category.id_category WHERE `id_article` = " + article.getId().toString());
             if(rs.next())
             {
                 category = new Category(rs.getLong("id_category"), rs.getString("nom_category"));
             }
-        } catch (SQLException ex) {
+        } 
+        catch (SQLException ex) 
+        {
             Logger.getLogger(EcommerceBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         disconnectBDD();
@@ -169,7 +193,8 @@ public class EcommerceBean {
     {
         boolean reponse;
         connectBDD();
-        try {
+        try 
+        {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM `client` WHERE `email_client` = '" + email + "'");
             if(rs.next())
@@ -180,7 +205,9 @@ public class EcommerceBean {
             {
                 reponse = false;                
             }
-        } catch (SQLException ex) {
+        } 
+        catch (SQLException ex) 
+        {
             Logger.getLogger(EcommerceBean.class.getName()).log(Level.SEVERE, null, ex);
             reponse = false; 
         }
@@ -192,7 +219,8 @@ public class EcommerceBean {
     {
         boolean reponse;
         connectBDD();
-        try {
+        try 
+        {
             PreparedStatement maRequette;
             maRequette = connection.prepareStatement("INSERT INTO `client`(`nom_client`, `prenom_client`, `email_client`, `mdp_client`, `adresse_client`) VALUES (?,?,?,?,?)");
             maRequette.setString(1, nom);
@@ -202,7 +230,9 @@ public class EcommerceBean {
             maRequette.setString(5, adresse);
             maRequette.execute();
             reponse = true;
-        } catch (SQLException ex) {
+        } 
+        catch (SQLException ex) 
+        {
             Logger.getLogger(EcommerceBean.class.getName()).log(Level.SEVERE, null, ex);
             reponse = false; 
         }
@@ -214,7 +244,8 @@ public class EcommerceBean {
     {
         User user = null;
         connectBDD();
-        try {
+        try 
+        {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM `client` WHERE `email_client` = '" + email + "'");
             if(rs.next())
@@ -225,7 +256,9 @@ public class EcommerceBean {
                     user = new User(rs.getLong("id_client"), email, rs.getString("nom_client"), rs.getString("prenom_client"), rs.getString("adresse_client"));
                 }
             }
-        } catch (SQLException ex) {
+        } 
+        catch (SQLException ex) 
+        {
             Logger.getLogger(EcommerceBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         disconnectBDD();
@@ -235,13 +268,16 @@ public class EcommerceBean {
     public void updateAdresseClient(User client, String adresse)
     {
         connectBDD();
-        try {
+        try 
+        {
             PreparedStatement maRequette;
             maRequette = connection.prepareStatement("UPDATE `client` SET `adresse_client` = ? WHERE `client`.`id_client` = ?;");
             maRequette.setString(1, adresse);
             maRequette.setString(2, client.getId().toString());
             maRequette.execute();
-        } catch (SQLException ex) {
+        } 
+        catch (SQLException ex) 
+        {
             Logger.getLogger(EcommerceBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         disconnectBDD();
@@ -250,7 +286,8 @@ public class EcommerceBean {
     public void enregistreCommande(User user, Cart cart)
     {
         connectBDD();
-        try {
+        try 
+        {
             Long key = -1L;
             
             PreparedStatement maRequette;
@@ -272,7 +309,9 @@ public class EcommerceBean {
                 maRequette2.execute();
             }
             
-        } catch (SQLException ex) {
+        } 
+        catch (SQLException ex) 
+        {
             Logger.getLogger(EcommerceBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         disconnectBDD();

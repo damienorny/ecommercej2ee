@@ -24,10 +24,7 @@ public final class Email
 
     private final static String MAILER_VERSION = "Java";
     
-    //Email email = new Email();
-    //email.envoyerMailSMTP("to", "objet", "body");
-    
-    public static boolean envoyerMailSMTP(String to, String objet, String body) 
+    public static boolean envoyerMailSMTP(User user, Cart cart) 
     {
         final String username="mathieu.gerard@edu.esiee.fr";
         final String password="Nico2893!!!";
@@ -47,11 +44,12 @@ public final class Email
         });
         try {
             String htmlBody = "<strong>This is an HTML Message</strong>";
-            String textBody = body;
+            String textBody = "Bonjour " + user.getPrenom() + ",\nNous vous confirmons par ce mail votre commande";
+            
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("zozo@zozo.com"));
-            message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(to));
-            message.setSubject(objet);
+            message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(user.getEmail()));
+            message.setSubject("Confirmation de votre achat!");
             MailcapCommandMap mc = (MailcapCommandMap) CommandMap.getDefaultCommandMap();
             mc.addMailcap("text/html;; x-java-content-handler=com.sun.mail.handlers.text_html");
             mc.addMailcap("text/xml;; x-java-content-handler=com.sun.mail.handlers.text_xml");

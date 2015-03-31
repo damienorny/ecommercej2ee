@@ -230,32 +230,25 @@ public class MainServlet extends HttpServlet {
      protected void processPostRechercherArticle(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-            HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
         String nomSearch = request.getParameter("nomSearch");
         EcommerceBean ecommerceBean = (EcommerceBean) session.getAttribute("ecommerce");
-        //Cart cart = (Cart) session.getAttribute("cart");
         Category category=ecommerceBean.getResearchCategory(nomSearch);
         ArrayList<Article> listeArticles=null;
         
         if(category!=null)
         {   
-           listeArticles=ecommerceBean.getAllArticlesByCategory(category); 
-           
-            
-            
-        }
-        
+           listeArticles = ecommerceBean.getAllArticlesByCategory(category);  
+        }        
         else
-        {
-            
-            listeArticles = ecommerceBean.getAllArticlesByName(nomSearch);
-            
-            
+        { 
+            listeArticles = ecommerceBean.getAllArticlesByName(nomSearch);   
         }
         request.setAttribute("listeArticles", listeArticles);
         RequestDispatcher view = request.getRequestDispatcher("/accueil.jsp");
         view.forward(request, response);
      }
+     
     protected void processPostRequestDetailArticle(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -303,9 +296,13 @@ public class MainServlet extends HttpServlet {
         User user = (User) session.getAttribute("user");
         ecommerceBean.updateAdresseClient(user, adresse);
         ecommerceBean.enregistreCommande(user, cart);
+
+        Email.envoyerMailSMTP(user, cart);
+            
         RequestDispatcher view = request.getRequestDispatcher("/commandeValidee.jsp");
         view.forward(request, response);
     }
+    
     /**
      * Handles the HTTP <code>POST</code> method.
      *

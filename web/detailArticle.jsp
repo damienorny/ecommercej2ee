@@ -10,7 +10,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label" for="qu">Quantité</label>
             <div class="col-sm-4">
-                <input class="form-control" type="number" id="quantite" name="quantite" required="required" min="1" value="1"/>
+                <input class="form-control" type="number" id="quantite" name="quantite" required="required" min="1" max="5000" value="1"/>
             </div>
         </div>
         <div>
