@@ -31,7 +31,7 @@ public class EcommerceBean {
         try {
         // This loads an instance of the MySQL Driver.
         // The driver has to be in the classpath.
-            Class.forName("com.mysql.jdbc.Driver");
+        Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException cnfe){
             System.out.println("" + cnfe);
         }

@@ -299,8 +299,8 @@ public class MainServlet extends HttpServlet {
 
         Email.envoyerMailSMTP(user, cart);
             
-        RequestDispatcher view = request.getRequestDispatcher("/commandeValidee.jsp");
-        view.forward(request, response);
+        request.setAttribute("msgSuccess", "Votre commande a été enregistrée, vous recevrez prochainement un mail vous confirmant votre commande!");
+        processGetRequestIndex(request, response);
     }
     
     /**

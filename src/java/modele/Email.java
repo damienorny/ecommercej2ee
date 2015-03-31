@@ -44,7 +44,13 @@ public final class Email
         });
         try {
             String htmlBody = "<strong>This is an HTML Message</strong>";
-            String textBody = "Bonjour " + user.getPrenom() + ",\nNous vous confirmons par ce mail votre commande";
+            String textBody = "Bonjour " + user.getPrenom() + ",<br/>Nous vous confirmons par ce mail votre commande:<br/>";
+            HashMap<Article,Integer> commande = cart.getCart();
+            for(Article art : commande.keySet())
+            {
+                textBody += commande.get(art) + " " + art.getNom() + "<br/>";
+            }
+            textBody += "Pour un total de: "+ cart.getValuePanier() + " &euro;<br/>Cette commande vous sera envoyé à l'adresse<br/>" + user.getAdresse() + "<br/>Nous vous prions de bien vouloir nous signaler tout problème et nous espérons que vous recevrez votre commande dans les plus bref délais.";
             
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("zozo@zozo.com"));
