@@ -31,10 +31,10 @@
                     <ul class="nav navbar-nav navbar-right">
                        <form class="navbar-form navbar-left"  method="POST" role="search">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search" name="nomSearch" >
+                                <input type="text" class="form-control" placeholder="Rechercher" name="nomSearch" >
                              <input type="hidden" name="page" value ="rechercherArticle"/>
                              </div>
-                            <button type="submit" class="btn btn-default">Submit</button>
+                            <button type="submit" class="btn btn-default">Rechercher</button>
                          </form>
                         <li><a href="index?action=panier">Mon panier <span class="badge">${cart.taillePanier}</span></a></li>
                         
