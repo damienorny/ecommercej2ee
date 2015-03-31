@@ -5,7 +5,6 @@
  */
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -35,6 +34,7 @@ public class MainServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         EcommerceBean ecommerceBean;
         HttpSession session = request.getSession();
+        //Lors de la première connexion au site, on instancie un objet EcommerceBean
         if(session.getAttribute("ecommerce") == null)
         {
             ecommerceBean = new EcommerceBean();
@@ -44,8 +44,10 @@ public class MainServlet extends HttpServlet {
         {
             ecommerceBean = (EcommerceBean) session.getAttribute("ecommerce");
         }
+        //Accueil.jsp attend un paramètre de type ArrayList ayant pour nom listeArticles
         ArrayList<Article> listeArticles = ecommerceBean.getAllArticles();
         request.setAttribute("listeArticles", listeArticles);
+        //On affiche la vue correspondante
         RequestDispatcher view = request.getRequestDispatcher("/accueil.jsp");
         view.forward(request, response);
     }
@@ -53,13 +55,15 @@ public class MainServlet extends HttpServlet {
     protected void processGetRequestDetailArticle(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+        //On récupère l'objet session
         HttpSession session = request.getSession();
         EcommerceBean ecommerceBean = (EcommerceBean) session.getAttribute("ecommerce");
-       
+        
         Long id = Long.parseLong(request.getParameter("articleId"));
+        //On demande au EcommerceBean de retourner un objet Article en fonction de son ID
         Article article = ecommerceBean.getArticleById(id);
         
+        //detailarticle.jsp attend un paramètre de type Article nommé article
         request.setAttribute("article", article);
         RequestDispatcher view = request.getRequestDispatcher("/detailArticle.jsp");
         view.forward(request, response);
@@ -68,7 +72,7 @@ public class MainServlet extends HttpServlet {
     protected void processGetRequestConnexion(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-       
+        //En tant que contrôleur, MainServlet s'occupe parfois de simplement renvoyer une vue
         RequestDispatcher view = request.getRequestDispatcher("/connexion.jsp");
         view.forward(request, response);
     }
@@ -85,9 +89,11 @@ public class MainServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
+        //On retire les paramètres de session pour déconnecter l'utilisateur
         session.removeAttribute("isUserRegistered");
         session.removeAttribute("user");
         session.removeAttribute("nextPage");
+        //La ligne ci dessous permet d'afficher un message vert avec le texte déconnexion réussie sur la prochaine vue
         request.setAttribute("msgSuccess", "Déconnexion réussie");
         processGetRequestIndex(request, response);
     }
@@ -106,6 +112,7 @@ public class MainServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         Boolean isUserRegistered = (Boolean) session.getAttribute("isUserRegistered");
+        //Si l'utilisateur est enregistré, on passe à la confirmation d'adresse, sinon il doit se connecté
         if(isUserRegistered != null && isUserRegistered == true)
         {
             RequestDispatcher view = request.getRequestDispatcher("/confirmer.jsp");
@@ -121,8 +128,8 @@ public class MainServlet extends HttpServlet {
     
     
     /**
-     * Handles the HTTP <code>GET</code> method.
-     *
+     * Récupère les requêtes de type GET et exécute la bonne méthode en fonction du paramètre nommé action
+     * 
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -173,11 +180,12 @@ public class MainServlet extends HttpServlet {
         EcommerceBean ecommerceBean = (EcommerceBean) session.getAttribute("ecommerce");
         String email = request.getParameter("email");
         String mdp = request.getParameter("mdp");
+        //Cette fonction renvoie une instance de la classe User si l'authentification a réussi, null sinon
         User user = ecommerceBean.authenticateUser(email, mdp);
         if(user == null)
         {
             request.setAttribute("msgError", "Identifiants invalides");
-            RequestDispatcher view = request.getRequestDispatcher("/connexion.jsp");//Mot de passe différents
+            RequestDispatcher view = request.getRequestDispatcher("/connexion.jsp");
             view.forward(request, response);
         }
         else
@@ -185,6 +193,7 @@ public class MainServlet extends HttpServlet {
             request.setAttribute("msgSuccess", "Connexion réussie");
             session.setAttribute("isUserRegistered", true);
             session.setAttribute("user", user);
+            //Permet de savoir si l'on renvoie sur l'accueil ou sur la page de validation de commande
             if(session.getAttribute("nextPage") != null && session.getAttribute("nextPage").equals("validation"))
             {
                 session.removeAttribute("nextPage");
@@ -208,11 +217,14 @@ public class MainServlet extends HttpServlet {
         
         String mdp = request.getParameter("mdp");
         String mdpV = request.getParameter("mdpV");
+        //Vérifie si les deux mots de passe sont identiques
         if(mdp.equals(mdpV))
         {
             String email = request.getParameter("email");
+            //Si l'adresse mail existe deja, on propose à l'utilisateur de se connecter
             if(ecommerceBean.isUserRegistered(email))
             {
+                //Affiche un message rouge d'erreur en haut de la page
                 request.setAttribute("msgError", "Un compte existe déjà pour l'adresse email " + email + ". Connectez-vous !");
                 RequestDispatcher view = request.getRequestDispatcher("/connexion.jsp");//Déjà enregistré
                 view.forward(request, response);
@@ -223,7 +235,6 @@ public class MainServlet extends HttpServlet {
                 String prenom = request.getParameter("prenom");
                 String adresse = request.getParameter("adresse");
                 User user = ecommerceBean.addUser(nom, prenom, email, mdp, adresse);
-                //User user = new User(email, nom, prenom, adresse);
                 session.setAttribute("isUserRegistered", true);
                 session.setAttribute("user", user);
                 if(session.getAttribute("nextPage") != null && session.getAttribute("nextPage").equals("validation"))
@@ -242,7 +253,7 @@ public class MainServlet extends HttpServlet {
         else
         {
             request.setAttribute("msgError", "Les mots de passe ne correspondent pas");
-            RequestDispatcher view = request.getRequestDispatcher("/register.jsp");//Mot de passe différents
+            RequestDispatcher view = request.getRequestDispatcher("/register.jsp");
             view.forward(request, response);
         }
     }
@@ -253,8 +264,7 @@ public class MainServlet extends HttpServlet {
         String nomSearch = request.getParameter("nomSearch");
         EcommerceBean ecommerceBean = (EcommerceBean) session.getAttribute("ecommerce");
         Category category=ecommerceBean.getResearchCategory(nomSearch);
-        ArrayList<Article> listeArticles=null;
-        
+        ArrayList<Article> listeArticles;
         if(category!=null)
         {   
            listeArticles = ecommerceBean.getAllArticlesByCategory(category);  
@@ -277,9 +287,8 @@ public class MainServlet extends HttpServlet {
         Long idArticle = Long.parseLong(request.getParameter("idArticle"));
         Integer quantite = Integer.parseInt(request.getParameter("quantite"));
         Article article = ecommerceBean.getArticleById(idArticle);
-
+        //Ajout de l'article au panier
         cart.addItem(article, quantite);
-        
         processGetRequestIndex(request, response);
     }
     
@@ -292,7 +301,7 @@ public class MainServlet extends HttpServlet {
         Long idArticle = Long.parseLong(request.getParameter("idArticle"));
         Integer quantite = Integer.parseInt(request.getParameter("quantite"));
         Article article = ecommerceBean.getArticleById(idArticle);
-        
+        //Utilisation de la même méthode pour supprimer du panier et modifier la quantité
         if(quantite==0)
         {
             cart.removeItem(article);
@@ -315,9 +324,11 @@ public class MainServlet extends HttpServlet {
         User user = (User) session.getAttribute("user");
         ecommerceBean.updateAdresseClient(user, adresse);
         user.setAdresse(adresse);
+        //On enregistre la commande en Base
         ecommerceBean.enregistreCommande(user, cart);
-
+        //On envoie un mail de confirmation
         Email.envoyerMailSMTP(user, cart);
+        //Puis on vide le panier
         cart.clearPanier();
         request.setAttribute("msgSuccess", "Votre commande a été enregistrée, vous recevrez prochainement un mail vous confirmant votre commande!");
         session.removeAttribute("nextPage");
@@ -325,7 +336,7 @@ public class MainServlet extends HttpServlet {
     }
     
     /**
-     * Handles the HTTP <code>POST</code> method.
+     * Récupère les requêtes de type POST et execute la bonne méthode en fonction de la valeur du paramètre page
      *
      * @param request servlet request
      * @param response servlet response
