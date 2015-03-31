@@ -320,6 +320,7 @@ public class MainServlet extends HttpServlet {
         Email.envoyerMailSMTP(user, cart);
         cart.clearPanier();
         request.setAttribute("msgSuccess", "Votre commande a été enregistrée, vous recevrez prochainement un mail vous confirmant votre commande!");
+        session.removeAttribute("nextPage");
         processGetRequestIndex(request, response);
     }
     
